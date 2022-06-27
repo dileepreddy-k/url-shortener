@@ -5,6 +5,8 @@ const urlModel = require('../Models/url.model');
 
 const shortenUrl = async (req, res, next) => {
     const { longUrl } = req.body;
+
+    console.log(longUrl);
     const baseUrl = process.env.BASE_URL;
 
     if (!validUrl.isUri(baseUrl)) {
