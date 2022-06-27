@@ -1,12 +1,21 @@
 import React, { useState } from 'react';
 
+import apiClient from '../api/api';
+
 const Form = () => {
 
     const [url, setUrl] = useState("");
 
-    const submitHandler = (e) => {
+    const submitHandler = async (e) => {
         e.preventDefault();
-        console.log('Form Submitted');
+
+        apiClient
+            .post('http://localhost:4000/api/url/shorten', { longUrl: url })
+            .then((response) => {
+                console.log(response);
+            }).catch((error) => {
+                console.log(error);
+            });
     }
 
     return (
