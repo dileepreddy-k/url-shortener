@@ -12,7 +12,6 @@ const redirectToLongUrl = async (req, res, next) => {
             return res.status(400).json('No Url Found');
         }
     } catch (err) {
-        console.log(err);
         res.status(500).json('Server Error');
     }
 }

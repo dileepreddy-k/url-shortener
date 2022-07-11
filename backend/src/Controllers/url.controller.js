@@ -5,8 +5,6 @@ const urlModel = require('../Models/url.model');
 
 const shortenUrl = async (req, res, next) => {
     const { longUrl } = req.body;
-
-    console.log(longUrl);
     const baseUrl = process.env.BASE_URL;
 
     if (!validUrl.isUri(baseUrl)) {
@@ -14,7 +12,6 @@ const shortenUrl = async (req, res, next) => {
     }
 
     const urlCode = uniqueId({ length: 8 });
-    console.log(urlCode);
 
     if (validUrl.isUri(longUrl)) {
         try {
@@ -37,7 +34,6 @@ const shortenUrl = async (req, res, next) => {
                 res.json(url);
             }
         } catch (err) {
-            console.log(err);
             res.status(500).json('Server Error');
         }
     } else {
