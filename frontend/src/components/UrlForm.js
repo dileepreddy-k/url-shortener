@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 import apiClient from '../api/api';
 
@@ -7,21 +7,20 @@ import { Form, Input, Row, Col, Button } from 'antd';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-const UrlForm = () => {
+const UrlForm = ({ getUrlList }) => {
 
-    const [url, setUrl] = useState("");
+    const [url, setUrl] = useState(undefined);
     const [status, setStatus] = useState(undefined);
+    const [urlList, setUrlsList] = useState(JSON.parse(localStorage.getItem('urlHash')) || []);
 
     const renderToast = (type, message) => {
 
         const toastConfig = {
             position: "top-center",
-            autoClose: 3000,
+            autoClose: 2000,
             hideProgressBar: false,
             closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
+            pauseOnHover: false
         }
 
         if (type === 'success')
@@ -36,17 +35,36 @@ const UrlForm = () => {
             toast(message, toastConfig)  
     }
 
-    const submitHandler = () => {
+    useEffect(() => {
+        localStorage.setItem('urlHash', JSON.stringify(urlList));
+        getUrlList(urlList);
+    }, [getUrlList, urlList]);
 
+    const apiShortenUrl = () => {
         apiClient
             .post('/shorten', { longUrl: url })
-            .then(() => {
+            .then((response) => {
                 setStatus("");
+                setUrlsList([...urlList, response.data]);
                 renderToast('success', 'URL Saved');
             }).catch((err) => {
                 setStatus('error');
                 renderToast('error', err.response.data);
             });
+    }
+    
+    const renderErrorMessage = () => {
+        setStatus('error');
+        renderToast('error', 'Please, provide a valid url')
+    }
+
+    const submitHandler = () => {
+        url ? apiShortenUrl() : renderErrorMessage();
+    }
+
+    const setUrlValue = (e) => {
+        setStatus(undefined);
+        setUrl(e.target.value);
     }
 
     return (
@@ -61,7 +79,7 @@ const UrlForm = () => {
                                 type="text"
                                 placeholder="Enter URL"
                                 value={url}
-                                onChange={(e) => setUrl(e.target.value)}
+                                onChange={setUrlValue}
                             />
                         </Form.Item>
                     </Col>
@@ -74,32 +92,6 @@ const UrlForm = () => {
             </Form>
         </>
     )
-}
-
-const ToastAlert = ({ type, message }) => {
-
-    console.log('Dummy');
-
-    const toastConfig = {
-        position: "top-center",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-    }
-
-    if (type === 'success')
-        toast.success(message, toastConfig)
-    else if (type === 'error')
-        toast.error(message, toastConfig)
-    else if ( type === 'warning')
-        toast.warn(message, toastConfig)
-    else if (type === 'info')
-        toast.info(message, toastConfig)
-    else
-        toast(message, toastConfig)        
 }
 
 export default UrlForm;

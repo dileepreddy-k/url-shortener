@@ -1,8 +1,20 @@
 import React from 'react';
 
-const UrlsList = () => {
+const UrlsList = ({ urlsList }) => {
+
     return (
-        <div>UrlsList</div>
+        <>
+            {
+                urlsList && urlsList.map((el) => {
+                    return (
+                        <div key={el.urlCode}>
+                            {el.longUrl}
+                            {el.shortUrl}
+                        </div>
+                    )
+                })
+            }
+        </>
     )
 }
 
