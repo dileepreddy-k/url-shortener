@@ -2,7 +2,7 @@ const express = require('express');
 var cors = require('cors')
 
 require('dotenv').config();
-const env = process.env || 4000;
+const env = process.env;
 
 const app = express();
 app.use(cors());
@@ -19,6 +19,6 @@ const urlRoute = require('./Routes/url.routes');
 app.use('/', viewRoute);
 app.use('/api/url', urlRoute);
 
-app.listen(env.PORT, () => {
+app.listen(env.PORT || 4000, () => {
     console.log(`App is running at http://localhost:${env.PORT}`);
 })

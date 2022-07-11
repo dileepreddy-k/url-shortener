@@ -4,6 +4,9 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 import Homepage from './views/Homepage';
 
+import 'antd/dist/antd.css';
+import './index.css';
+
 const App = () => {
 	return (
 		<>

@@ -1,21 +1,26 @@
 import React from 'react';
-import Footer from '../components/Footer';
 
-import Form from '../components/Form'; 
-import Header from '../components/Header';
+import Layout from '../Layout/Layout';
+
+import UrlForm from '../components/UrlForm'; 
 import UrlsList from '../components/UrlsList';
+
+import { Row, Col } from 'antd';
 
 const Homepage = () => {
     return (
         <>
-            {/* Header with logo & link to github repo */}
-            <Header />
-            {/* Input field to add long url with submit button */}
-            <Form />
-            {/* List of added urls from the cookies/localstorage */}
-            <UrlsList />
-            {/* Footer */}
-            <Footer />
+            <Layout>
+                <Row>
+                    {/* Input field to add long url with submit button */}
+                    <Col span={24}>
+                        <UrlForm />
+                    </Col>
+                </Row>
+                
+                {/* List of added urls from the cookies/localstorage */}
+                <UrlsList />
+            </Layout>
         </>
     )
 }
