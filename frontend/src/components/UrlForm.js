@@ -72,7 +72,7 @@ const UrlForm = ({ getUrlList }) => {
             <Form onFinish={submitHandler}>
                 <ToastContainer />
                 <Row align='middle' justify='center'>
-                    <Col span={18}>
+                    <Col span={20}>
                         <Form.Item name="url">
                             <Input
                                 status={status ? 'error' : ''}
@@ -85,7 +85,7 @@ const UrlForm = ({ getUrlList }) => {
                     </Col>
                     <Col span={4}>
                         <Form.Item>
-                            <Button type="primary" htmlType="submit" block>Shorten</Button>
+                            <Button type="primary" htmlType="submit" block className='button-main'>Shorten</Button>
                         </Form.Item>
                     </Col>
                 </Row>
