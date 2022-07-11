@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 
 import Layout from '../Layout/Layout';
 
@@ -8,18 +8,22 @@ import UrlsList from '../components/UrlsList';
 import { Row, Col } from 'antd';
 
 const Homepage = () => {
+
+    const [urlList, setUrlList] = useState([]);
+
+    const getUrlList = (list) => {
+        setUrlList(list);
+    }
+    
     return (
         <>
             <Layout>
                 <Row>
-                    {/* Input field to add long url with submit button */}
                     <Col span={24}>
-                        <UrlForm />
+                        <UrlForm getUrlList={getUrlList}/>
                     </Col>
-                </Row>
-                
-                {/* List of added urls from the cookies/localstorage */}
-                <UrlsList />
+                </Row>                
+                <UrlsList urlsList={urlList}/>
             </Layout>
         </>
     )
